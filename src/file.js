@@ -1,6 +1,6 @@
-export function downloadFile (fileName, content) {
+export function downloadFile (fileName, content, options = {}) {
   const link = document.createElement('a')
-  const blob = new Blob([content])
+  const blob = new Blob([content], options)
   link.download = fileName
   link.href = URL.createObjectURL(blob)
   const event = document.createEvent('MouseEvents')
@@ -28,6 +28,16 @@ export const downloadBlob = (blob, filename = '') => {
     navigator.msSaveBlob(blob, filename)
   }
 }
+
+/**
+ * 下载 excel
+ */
+export const downloadExcel = function (fileName, content) {
+  return downloadFile(fileName, content, {
+    type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8'
+  })
+}
+
 
 /**
  * 下载 base64 格式文件
